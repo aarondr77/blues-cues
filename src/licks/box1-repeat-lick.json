@@ -1,0 +1,60 @@
+{
+  "id": "box1-repeat-lick",
+  "name": "Box 1 Repeat Lick",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 1,
+  "bpm": 76,
+  "difficulty": 2,
+  "notes": [
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 1,
+      "fret": 5,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 1,
+      "fret": 5,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 1,
+      "fret": 5,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 64,
+      "string": 2,
+      "fret": 5,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

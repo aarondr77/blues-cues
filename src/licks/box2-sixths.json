@@ -1,0 +1,53 @@
+{
+  "id": "box2-sixths",
+  "name": "Box 2 Sweet Notes",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 2,
+  "bpm": 74,
+  "difficulty": 2,
+  "notes": [
+    {
+      "midi": 66,
+      "string": 2,
+      "fret": 7,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 2,
+      "fret": 10,
+      "beat": 1,
+      "duration": 1
+    },
+    {
+      "midi": 71,
+      "string": 1,
+      "fret": 7,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 72,
+      "string": 1,
+      "fret": 8,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 1,
+      "fret": 5,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "box2-answer",
+  "name": "Box 2 Answer Phrase",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 2,
+  "bpm": 78,
+  "difficulty": 2,
+  "notes": [
+    {
+      "midi": 64,
+      "string": 3,
+      "fret": 9,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 2,
+      "fret": 10,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 64,
+      "string": 3,
+      "fret": 9,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 62,
+      "string": 3,
+      "fret": 7,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 57,
+      "string": 4,
+      "fret": 7,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

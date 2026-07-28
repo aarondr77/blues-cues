@@ -1,0 +1,60 @@
+{
+  "id": "box4-root-run",
+  "name": "Box 4 Root Run",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 4,
+  "bpm": 82,
+  "difficulty": 3,
+  "notes": [
+    {
+      "midi": 62,
+      "string": 4,
+      "fret": 12,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 64,
+      "string": 4,
+      "fret": 14,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 3,
+      "fret": 12,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 3,
+      "fret": 14,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 72,
+      "string": 2,
+      "fret": 13,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 74,
+      "string": 2,
+      "fret": 15,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 76,
+      "string": 1,
+      "fret": 12,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

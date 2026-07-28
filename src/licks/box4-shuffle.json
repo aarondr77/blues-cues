@@ -1,0 +1,60 @@
+{
+  "id": "box4-shuffle",
+  "name": "Box 4 Shuffle Phrase",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 4,
+  "bpm": 76,
+  "difficulty": 4,
+  "notes": [
+    {
+      "midi": 76,
+      "string": 1,
+      "fret": 12,
+      "beat": 0,
+      "duration": 0.6666666666666666
+    },
+    {
+      "midi": 79,
+      "string": 1,
+      "fret": 15,
+      "beat": 0.6666666666666666,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 76,
+      "string": 1,
+      "fret": 12,
+      "beat": 1,
+      "duration": 0.6666666666666666
+    },
+    {
+      "midi": 74,
+      "string": 2,
+      "fret": 15,
+      "beat": 1.6666666666666667,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 72,
+      "string": 2,
+      "fret": 13,
+      "beat": 2,
+      "duration": 0.6666666666666666
+    },
+    {
+      "midi": 69,
+      "string": 3,
+      "fret": 14,
+      "beat": 2.6666666666666665,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 67,
+      "string": 3,
+      "fret": 12,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}
