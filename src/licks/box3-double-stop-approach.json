@@ -1,0 +1,53 @@
+{
+  "id": "box3-double-stop-approach",
+  "name": "Box 3 Approach Notes",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 3,
+  "bpm": 70,
+  "difficulty": 3,
+  "notes": [
+    {
+      "midi": 66,
+      "string": 3,
+      "fret": 11,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 3,
+      "fret": 12,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 2,
+      "fret": 10,
+      "beat": 1,
+      "duration": 1
+    },
+    {
+      "midi": 72,
+      "string": 2,
+      "fret": 13,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 74,
+      "string": 1,
+      "fret": 10,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 76,
+      "string": 1,
+      "fret": 12,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

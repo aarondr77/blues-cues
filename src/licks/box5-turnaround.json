@@ -1,0 +1,60 @@
+{
+  "id": "box5-turnaround",
+  "name": "Box 5 Turnaround",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 5,
+  "bpm": 72,
+  "difficulty": 4,
+  "notes": [
+    {
+      "midi": 81,
+      "string": 1,
+      "fret": 17,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 79,
+      "string": 1,
+      "fret": 15,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 76,
+      "string": 2,
+      "fret": 17,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 74,
+      "string": 2,
+      "fret": 15,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 71,
+      "string": 3,
+      "fret": 16,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 3,
+      "fret": 14,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 64,
+      "string": 4,
+      "fret": 14,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

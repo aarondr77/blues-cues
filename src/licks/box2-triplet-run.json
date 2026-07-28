@@ -1,0 +1,60 @@
+{
+  "id": "box2-triplet-run",
+  "name": "Box 2 Triplet Run",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 2,
+  "bpm": 66,
+  "difficulty": 4,
+  "notes": [
+    {
+      "midi": 72,
+      "string": 1,
+      "fret": 8,
+      "beat": 0,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 74,
+      "string": 1,
+      "fret": 10,
+      "beat": 0.3333333333333333,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 72,
+      "string": 1,
+      "fret": 8,
+      "beat": 0.6666666666666666,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 69,
+      "string": 2,
+      "fret": 10,
+      "beat": 1,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 67,
+      "string": 2,
+      "fret": 8,
+      "beat": 1.3333333333333333,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 64,
+      "string": 3,
+      "fret": 9,
+      "beat": 1.6666666666666667,
+      "duration": 0.3333333333333333
+    },
+    {
+      "midi": 62,
+      "string": 3,
+      "fret": 7,
+      "beat": 2,
+      "duration": 1
+    }
+  ]
+}

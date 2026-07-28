@@ -1,0 +1,60 @@
+{
+  "id": "box3-descending",
+  "name": "Box 3 Descending Phrase",
+  "key": "A",
+  "rootFret": 5,
+  "expectedBox": 3,
+  "bpm": 80,
+  "difficulty": 3,
+  "notes": [
+    {
+      "midi": 76,
+      "string": 1,
+      "fret": 12,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 74,
+      "string": 1,
+      "fret": 10,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 72,
+      "string": 2,
+      "fret": 13,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 69,
+      "string": 2,
+      "fret": 10,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 67,
+      "string": 3,
+      "fret": 12,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 64,
+      "string": 3,
+      "fret": 9,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 59,
+      "string": 4,
+      "fret": 9,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}

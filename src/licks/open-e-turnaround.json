@@ -1,0 +1,60 @@
+{
+  "id": "open-e-turnaround",
+  "name": "Open E Turnaround",
+  "key": "E",
+  "rootFret": 0,
+  "expectedBox": 1,
+  "bpm": 70,
+  "difficulty": 3,
+  "notes": [
+    {
+      "midi": 59,
+      "string": 3,
+      "fret": 4,
+      "beat": 0,
+      "duration": 0.5
+    },
+    {
+      "midi": 55,
+      "string": 4,
+      "fret": 5,
+      "beat": 0.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 58,
+      "string": 3,
+      "fret": 3,
+      "beat": 1,
+      "duration": 0.5
+    },
+    {
+      "midi": 54,
+      "string": 4,
+      "fret": 4,
+      "beat": 1.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 57,
+      "string": 3,
+      "fret": 2,
+      "beat": 2,
+      "duration": 0.5
+    },
+    {
+      "midi": 53,
+      "string": 4,
+      "fret": 3,
+      "beat": 2.5,
+      "duration": 0.5
+    },
+    {
+      "midi": 40,
+      "string": 6,
+      "fret": 0,
+      "beat": 3,
+      "duration": 1
+    }
+  ]
+}
