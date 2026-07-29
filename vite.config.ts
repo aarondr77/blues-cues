@@ -15,7 +15,8 @@ const CSP = [
   "object-src 'none'",
   "base-uri 'none'",
   "form-action 'none'",
-  "frame-ancestors 'none'",
+  // `frame-ancestors` is header-only; browsers ignore it in a meta tag. Set
+  // `Content-Security-Policy: frame-ancestors 'none'` at the web server instead.
 ].join('; ')
 
 /** Dev keeps its inline HMR scripts; the shipped build gets locked down. */
