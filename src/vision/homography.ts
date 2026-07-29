@@ -83,7 +83,7 @@ export function invertHomography(h: number[]): number[] | null {
   return inv.map((value) => value / inv[8]);
 }
 
-export function reprojectionErrorPx(h: number[], from: Point[], to: Point[]): number {
+export function reprojectionError(h: number[], from: Point[], to: Point[]): number {
   let sum = 0;
   for (let i = 0; i < from.length; i++) {
     const projected = applyHomography(h, from[i]);

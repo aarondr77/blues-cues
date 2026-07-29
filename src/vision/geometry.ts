@@ -1,5 +1,12 @@
+import { degToRad, median } from '../utils/math';
 import { distanceToFret, DOT_FRETS, dotPosition, DOUBLE_DOT_FRET, fretDistance } from './fretMath';
-import { applyHomography, computeHomography, invertHomography, solveLinearSystem } from './homography';
+import {
+  applyHomography,
+  computeHomography,
+  invertHomography,
+  reprojectionError,
+  solveLinearSystem,
+} from './homography';
 import { findBlobs, houghLines, sobel, toGrayscale } from './imageOps';
 import {
   angleBetween,
@@ -14,7 +21,7 @@ import type { Frame, InlayDot, NeckGeometry, Point } from './types';
 
 export const MIN_DOTS = 4;
 /** How parallel a line must be to the string bundle to count as an edge. */
-const EDGE_PARALLEL_TOLERANCE_RAD = (4 * Math.PI) / 180;
+const EDGE_PARALLEL_TOLERANCE_RAD = degToRad(4);
 /** Beyond this the fit is not describing a fretboard. */
 export const MAX_REPROJECTION_ERROR_PX = 12;
 
@@ -53,12 +60,6 @@ function axisFromDistance(fit: AxisFit, d: number): number {
   const denominator = d * fit.c - fit.a;
   if (Math.abs(denominator) < 1e-12) return NaN;
   return (fit.b - d) / denominator;
-}
-
-function median(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
 interface AxisDot {
@@ -262,12 +263,11 @@ export function estimateNeckGeometry(frame: Frame, options: GeometryOptions = {}
     const boardToImage = invertHomography(imageToBoard);
     if (!boardToImage) continue;
 
-    let squaredError = 0;
-    for (const dot of dots) {
-      const projected = applyHomography(boardToImage, { x: dotPosition(dot.fret), y: dot.across });
-      squaredError += (projected.x - dot.center.x) ** 2 + (projected.y - dot.center.y) ** 2;
-    }
-    const reprojectionErrorPx = Math.sqrt(squaredError / dots.length);
+    const reprojectionErrorPx = reprojectionError(
+      boardToImage,
+      dots.map((dot) => ({ x: dotPosition(dot.fret), y: dot.across })),
+      dots.map((dot) => dot.center),
+    );
     if (reprojectionErrorPx > MAX_REPROJECTION_ERROR_PX) continue;
 
     const visible = [

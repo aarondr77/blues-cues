@@ -1,3 +1,4 @@
+import { degToRad } from '../utils/math';
 import type { Frame, Point } from './types';
 
 export interface GrayImage {
@@ -86,7 +87,7 @@ export function houghLines(gradient: Gradient, options: HoughOptions = {}): Houg
   const minVoteRatio = options.minVoteRatio ?? 0.08;
   const maxLines = options.maxLines ?? 40;
   const suppressRhoPx = options.suppressRhoPx ?? 10;
-  const suppressThetaRad = options.suppressThetaRad ?? (4 * Math.PI) / 180;
+  const suppressThetaRad = options.suppressThetaRad ?? degToRad(4);
 
   const { width, height, magnitude } = gradient;
   const diagonal = Math.hypot(width, height);

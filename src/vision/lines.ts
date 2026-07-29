@@ -1,3 +1,4 @@
+import { degToRad } from '../utils/math';
 import type { Point } from './types';
 
 export interface Line {
@@ -55,7 +56,7 @@ export function meanTheta(lines: Line[]): number {
  */
 export function splitOrientations(
   lines: Line[],
-  toleranceRad = (15 * Math.PI) / 180,
+  toleranceRad = degToRad(15),
 ): { dominant: Line[]; perpendicular: Line[]; dominantTheta: number } | null {
   if (lines.length === 0) return null;
 
