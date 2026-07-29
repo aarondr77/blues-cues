@@ -12,7 +12,7 @@ import { useAppStore } from '../state/store';
 type Status = 'idle' | 'running' | 'done';
 
 export function LatencyScreen() {
-  const { latency, setLatency, setPhase, setError } = useAppStore();
+  const { latency, setLatency, setPhase, setError, setMicReady } = useAppStore();
   const [status, setStatus] = useState<Status>('idle');
   const [result, setResult] = useState<LatencyResult | null>(null);
 
@@ -21,6 +21,7 @@ export function LatencyScreen() {
     const analyzer = audioCapture.analyzer;
     if (!context || !analyzer) {
       setError('Microphone is not running — enable it before calibrating.');
+      setMicReady(false);
       setPhase('permissions');
       return;
     }

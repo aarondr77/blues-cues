@@ -17,7 +17,7 @@ const COUNT_IN_MS = 3000;
 const TAIL_MS = 900;
 
 export function PlayScreen() {
-  const { selectedLickId, latency, visionEnabled, finishAttempt, setPhase, setError } =
+  const { selectedLickId, latency, visionEnabled, finishAttempt, setPhase, setError, setMicReady } =
     useAppStore();
   const lick = selectedLickId ? lickById(selectedLickId) : undefined;
 
@@ -45,6 +45,7 @@ export function PlayScreen() {
       // Without an analyser the take can never complete, so the highway would
       // scroll forever with nothing being judged.
       setError('Microphone is not running — enable it to play.');
+      setMicReady(false);
       setPhase('permissions');
       return;
     }
@@ -102,7 +103,7 @@ export function PlayScreen() {
       cancelAnimationFrame(raf);
       finished.current = true;
     };
-  }, [lick, latency, finishAttempt, setError, setPhase]);
+  }, [lick, latency, finishAttempt, setError, setMicReady, setPhase]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
