@@ -4,8 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "vendor:assets": "node scripts/vendor-assets.mjs",
+    "predev": "npm run vendor:assets",
     "dev": "vite",
+    "prebuild": "npm run vendor:assets",
     "build": "tsc -b && vite build",
+    "prepreview": "npm run vendor:assets",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",

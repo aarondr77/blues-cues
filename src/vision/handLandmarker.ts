@@ -1,9 +1,9 @@
 import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision';
 import type { HandLandmark } from './types';
 
-const WASM_BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm';
-const MODEL_URL =
-  'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task';
+// Served from our own origin; `npm run vendor:assets` puts them there.
+const WASM_BASE = '/vendor/mediapipe/wasm';
+const MODEL_URL = '/vendor/mediapipe/hand_landmarker.task';
 
 let landmarkerPromise: Promise<HandLandmarker> | null = null;
 

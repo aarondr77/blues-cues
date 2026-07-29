@@ -39,15 +39,33 @@ interface AppState {
   setError: (error: string | null) => void;
 }
 
+/** Widest offset the calibrator can produce; anything beyond it did not come from us. */
+const MAX_STORED_OFFSET_MS = 2000;
+
+/** Anything can end up in localStorage, so a stored offset is only trusted within calibration limits. */
+export function parseStoredLatency(raw: string): StoredLatency | null {
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+  if (typeof value !== 'object' || value === null) return null;
+
+  const { offsetMs, stdDevMs, reliable } = value as Record<string, unknown>;
+  if (typeof offsetMs !== 'number' || !Number.isFinite(offsetMs)) return null;
+  if (typeof stdDevMs !== 'number' || !Number.isFinite(stdDevMs) || stdDevMs < 0) return null;
+  if (typeof reliable !== 'boolean') return null;
+  if (Math.abs(offsetMs) > MAX_STORED_OFFSET_MS || stdDevMs > MAX_STORED_OFFSET_MS) return null;
+
+  return { offsetMs, stdDevMs, reliable };
+}
+
 function loadLatency(): StoredLatency | null {
   if (typeof localStorage === 'undefined') return null;
   const raw = localStorage.getItem(LATENCY_STORAGE_KEY);
   if (!raw) return null;
-  try {
-    return JSON.parse(raw) as StoredLatency;
-  } catch {
-    return null;
-  }
+  return parseStoredLatency(raw);
 }
 
 export const useAppStore = create<AppState>((set) => ({

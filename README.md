@@ -15,13 +15,19 @@ No backend, no accounts; the only persisted state is the measured audio latency 
 ```bash
 nvm use            # v22.12.0, see .nvmrc
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5173 (vendors MediaPipe first)
 npm test           # vitest
 npm run lint       # oxlint
 npm run build      # tsc -b && vite build
 ```
 
 Chrome is the target browser: it needs `AudioWorklet`, `getUserMedia` and WebGL for MediaPipe.
+
+The MediaPipe wasm runtime and hand landmarker model are served from our own origin rather than a
+CDN: `npm run vendor:assets` (run automatically before `dev`/`build`/`preview`) copies the wasm out
+of `node_modules` and downloads the model into the git-ignored `public/vendor/`, checking it against
+a pinned SHA-256. The production build ships a strict `Content-Security-Policy` that only allows
+same-origin and `blob:` sources, so any new third-party asset has to be vendored too.
 
 ## Architecture
 
