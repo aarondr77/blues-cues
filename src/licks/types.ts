@@ -1,3 +1,5 @@
+import type { BoxPosition } from '../theory';
+
 export interface LickNote {
   midi: number;
   /** Display only — scoring uses `midi`. */
@@ -9,8 +11,6 @@ export interface LickNote {
   /** Length in quarter notes. */
   duration: number;
 }
-
-export type BoxPosition = 1 | 2 | 3 | 4 | 5;
 
 export interface Lick {
   id: string;

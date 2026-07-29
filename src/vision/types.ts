@@ -44,7 +44,7 @@ export interface NeckGeometry {
   visibleFrets: { min: number; max: number };
 }
 
-export type BoxPosition = 1 | 2 | 3 | 4 | 5;
+export type { BoxPosition } from '../theory';
 
 export interface HandLandmark {
   /** Normalised to the frame, 0..1, as MediaPipe reports them. */

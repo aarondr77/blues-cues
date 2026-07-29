@@ -1,3 +1,5 @@
+import { median } from '../utils/math';
+
 export interface LatencyResult {
   offsetMs: number;
   stdDevMs: number;
@@ -13,12 +15,6 @@ export const MAX_RELIABLE_OFFSET_MS = 400;
 export const MAX_RELIABLE_STD_DEV_MS = 40;
 
 export const LATENCY_STORAGE_KEY = 'blues-cues:latency';
-
-function median(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-}
 
 /**
  * Pairs each metronome click with the attack that followed it and takes the

@@ -1,3 +1,4 @@
+import { median } from '../utils/math';
 import { hannWindow, magnitudeSpectrum } from './fft';
 import { ONSET_FRAME_SIZE, ONSET_HOP_SIZE, sliceFrames } from './frames';
 import type { Onset, SpectralFrame } from './types';
@@ -65,13 +66,6 @@ export function spectralFlux(frames: SpectralFrame[]): Float32Array {
     flux[i] = sum;
   }
   return flux;
-}
-
-function median(values: number[]): number {
-  if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
 /**

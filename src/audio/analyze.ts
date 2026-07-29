@@ -1,3 +1,5 @@
+import { median } from '../utils/math';
+import { midiToHz } from './notes';
 import { computeSpectralFrames, detectOnsets, type OnsetOptions } from './onsets';
 import { applyJumpHysteresis, snapToExpectedOctave } from './octave';
 import { detectPitchTrack } from './pitch';
@@ -15,12 +17,6 @@ export interface DetectNotesOptions {
 }
 
 const DEFAULT_PITCH_WINDOW_MS = 60;
-
-function medianOf(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-}
 
 /** Pairs each onset with the pitch that follows it, applying octave correction. */
 export function notesFromOnsets(
@@ -47,15 +43,15 @@ export function notesFromOnsets(
     }
     if (candidates.length === 0) return;
 
-    const rawMidi = medianOf(candidates.map((frame) => frame.midi as number));
+    const rawMidi = median(candidates.map((frame) => frame.midi as number));
     const expected = options.expectedMidis?.[Math.min(index, options.expectedMidis.length - 1)];
     const midi = snapToExpectedOctave(rawMidi, expected ?? null);
-    const clarity = medianOf(candidates.map((frame) => frame.clarity));
+    const clarity = median(candidates.map((frame) => frame.clarity));
 
     notes.push({
       timeMs: onset.timeMs,
       midi,
-      hz: 440 * Math.pow(2, (midi - 69) / 12),
+      hz: midiToHz(midi),
       clarity,
     });
   });

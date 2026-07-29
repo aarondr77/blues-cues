@@ -1,3 +1,4 @@
+import { degToRad } from '../utils/math';
 import { applyHomography, computeHomography, invertHomography } from '../vision/homography';
 import { DOT_FRETS, dotPosition, fretDistance } from '../vision/fretMath';
 import type { Frame, Point } from '../vision/types';
@@ -54,7 +55,7 @@ export function renderFretboard(options: FretboardRenderOptions = {}): RenderedF
   const startDistance = fretDistance(o.startFret);
   const endDistance = fretDistance(o.endFret);
   const lengthPx = width * o.lengthFraction;
-  const rotation = (o.rotationDeg * Math.PI) / 180;
+  const rotation = degToRad(o.rotationDeg);
 
   const place = (u: number, v: number): Point => {
     // u: 0..1 along the drawn neck, v: -0.5..0.5 across it.
