@@ -19,12 +19,20 @@ export class CameraCapture {
     this.video.playsInline = true;
   }
 
+  /** Rejects with the underlying failure and releases the camera if playback fails. */
   async start(): Promise<MediaStream> {
     if (this.stream) return this.stream;
-    this.stream = await navigator.mediaDevices.getUserMedia(CAMERA_CONSTRAINTS);
-    this.video.srcObject = this.stream;
-    await this.video.play();
-    return this.stream;
+    const stream = await navigator.mediaDevices.getUserMedia(CAMERA_CONSTRAINTS);
+    this.video.srcObject = stream;
+    try {
+      await this.video.play();
+    } catch (error) {
+      stream.getTracks().forEach((track) => track.stop());
+      this.video.srcObject = null;
+      throw error;
+    }
+    this.stream = stream;
+    return stream;
   }
 
   stop(): void {
@@ -37,7 +45,10 @@ export class CameraCapture {
     return this.video.readyState >= 2 && this.video.videoWidth > 0;
   }
 
-  /** Grabs the current video frame as pixels the vision modules can read. */
+  /**
+   * Grabs the current video frame as pixels the vision modules can read. Null
+   * means "no frame yet"; a missing 2D context is fatal and throws.
+   */
   grab(width = ANALYSIS_WIDTH): Frame | null {
     if (!this.ready) return null;
     const scale = width / this.video.videoWidth;
@@ -49,7 +60,7 @@ export class CameraCapture {
       this.canvas.height = height;
       this.context = this.canvas.getContext('2d', { willReadFrequently: true });
     }
-    if (!this.context) return null;
+    if (!this.context) throw new Error('camera: 2D canvas context unavailable');
 
     this.context.drawImage(this.video, 0, 0, width, height);
     const imageData = this.context.getImageData(0, 0, width, height);

@@ -8,7 +8,7 @@ export function FramingScreen() {
   const { setPhase, setFramingPassed, skipVision } = useAppStore();
   const videoRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
-  const { sample, modelError } = useVision({ enabled: true, intervalMs: 200 });
+  const { sample, modelError, visionError } = useVision({ enabled: true, intervalMs: 200 });
 
   useEffect(() => {
     const host = videoRef.current;
@@ -86,6 +86,8 @@ export function FramingScreen() {
           Hand tracking failed to load ({modelError}). You can still play audio-only.
         </p>
       )}
+
+      {visionError && <p className="warning">{visionError} You can still play audio-only.</p>}
 
       <div className="actions">
         <button type="button" disabled={!passed} onClick={() => setPhase('latency')}>

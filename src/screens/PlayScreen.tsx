@@ -17,7 +17,8 @@ const COUNT_IN_MS = 3000;
 const TAIL_MS = 900;
 
 export function PlayScreen() {
-  const { selectedLickId, latency, visionEnabled, finishAttempt, setPhase } = useAppStore();
+  const { selectedLickId, latency, visionEnabled, finishAttempt, setPhase, setError } =
+    useAppStore();
   const lick = selectedLickId ? lickById(selectedLickId) : undefined;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,7 +31,7 @@ export function PlayScreen() {
     if (sample.box) boxSamples.current.push(sample.box);
   }, []);
 
-  useVision({
+  const { modelError, visionError } = useVision({
     enabled: visionEnabled,
     rootFret: lick?.rootFret ?? 5,
     intervalMs: 250,
@@ -40,7 +41,14 @@ export function PlayScreen() {
   useEffect(() => {
     if (!lick) return;
     const analyzer = audioCapture.analyzer;
-    analyzer?.reset();
+    if (!analyzer) {
+      // Without an analyser the take can never complete, so the highway would
+      // scroll forever with nothing being judged.
+      setError('Microphone is not running — enable it to play.');
+      setPhase('permissions');
+      return;
+    }
+    analyzer.reset();
     finished.current = false;
     boxSamples.current = [];
 
@@ -50,7 +58,7 @@ export function PlayScreen() {
     let raf = 0;
 
     const complete = () => {
-      if (finished.current || !analyzer) return;
+      if (finished.current) return;
       finished.current = true;
       const origin = analyzer.originMs ?? startMs;
       const detected = analyzer.finish({ expectedMidis });
@@ -59,25 +67,34 @@ export function PlayScreen() {
         calibrated: latency != null,
       });
 
+      if (analyzer.overflowed) {
+        setError('The take outran the capture buffer — the end of it was not scored.');
+      }
+
       const samples = boxSamples.current;
       const best = samples.length > 0 ? mostCommonBox(samples) : null;
       finishAttempt(score, { estimate: best, expectedBox: lick.expectedBox });
     };
 
     const tick = () => {
-      const nowMs = audioCapture.nowMs;
-      setSongTimeMs(nowMs - startMs);
+      try {
+        const nowMs = audioCapture.nowMs;
+        setSongTimeMs(nowMs - startMs);
 
-      if (analyzer) {
         const fresh = analyzer.poll(nowMs, { expectedMidis });
         if (fresh.length > 0) setLiveNotes((current) => [...current, ...fresh]);
-      }
 
-      if (nowMs >= endMs) {
-        complete();
-        return;
+        if (nowMs >= endMs) {
+          complete();
+          return;
+        }
+        raf = requestAnimationFrame(tick);
+      } catch (error) {
+        // Detection blowing up mid-take must not leave the highway scrolling.
+        finished.current = true;
+        setError(`Audio detection failed: ${error instanceof Error ? error.message : String(error)}`);
+        setPhase('select');
       }
-      raf = requestAnimationFrame(tick);
     };
 
     raf = requestAnimationFrame(tick);
@@ -85,7 +102,7 @@ export function PlayScreen() {
       cancelAnimationFrame(raf);
       finished.current = true;
     };
-  }, [lick, latency, finishAttempt]);
+  }, [lick, latency, finishAttempt, setError, setPhase]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -130,6 +147,12 @@ export function PlayScreen() {
           Stop
         </button>
       </header>
+
+      {(visionError ?? modelError) && (
+        <p className="warning">
+          Box feedback unavailable ({visionError ?? modelError}). Pitch and timing are still scored.
+        </p>
+      )}
 
       <canvas ref={canvasRef} className="highway" />
 

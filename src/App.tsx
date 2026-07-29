@@ -17,12 +17,19 @@ const SCREENS = {
 };
 
 export default function App() {
-  const { phase, error } = useAppStore();
+  const { phase, error, setError } = useAppStore();
   const Screen = SCREENS[phase];
 
   return (
     <main className="app">
-      {error && <p className="error">{error}</p>}
+      {error && (
+        <p className="error">
+          {error}{' '}
+          <button type="button" className="secondary" onClick={() => setError(null)}>
+            Dismiss
+          </button>
+        </p>
+      )}
       <Screen />
     </main>
   );

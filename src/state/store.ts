@@ -39,14 +39,67 @@ interface AppState {
   setError: (error: string | null) => void;
 }
 
+function isStoredLatency(value: unknown): value is StoredLatency {
+  if (typeof value !== 'object' || value === null) return false;
+  const candidate = value as Record<string, unknown>;
+  return (
+    typeof candidate.offsetMs === 'number' &&
+    Number.isFinite(candidate.offsetMs) &&
+    typeof candidate.stdDevMs === 'number' &&
+    Number.isFinite(candidate.stdDevMs) &&
+    typeof candidate.reliable === 'boolean'
+  );
+}
+
+/**
+ * A corrupt entry is discarded rather than trusted: parsed JSON of the wrong
+ * shape used to sail through the cast and produce NaN timing offsets.
+ */
 function loadLatency(): StoredLatency | null {
   if (typeof localStorage === 'undefined') return null;
-  const raw = localStorage.getItem(LATENCY_STORAGE_KEY);
-  if (!raw) return null;
+  let raw: string | null = null;
   try {
-    return JSON.parse(raw) as StoredLatency;
-  } catch {
+    raw = localStorage.getItem(LATENCY_STORAGE_KEY);
+  } catch (error) {
+    console.warn('[store] could not read stored latency', error);
     return null;
+  }
+  if (!raw) return null;
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    console.warn('[store] stored latency is not valid JSON; discarding it', error);
+    forgetStoredLatency();
+    return null;
+  }
+  if (!isStoredLatency(parsed)) {
+    console.warn('[store] stored latency has an unexpected shape; discarding it', parsed);
+    forgetStoredLatency();
+    return null;
+  }
+  return { offsetMs: parsed.offsetMs, stdDevMs: parsed.stdDevMs, reliable: parsed.reliable };
+}
+
+/** Persistence is best-effort — private mode and full quotas must not break calibration. */
+function forgetStoredLatency(): void {
+  try {
+    localStorage.removeItem(LATENCY_STORAGE_KEY);
+  } catch (error) {
+    console.warn('[store] could not clear stored latency', error);
+  }
+}
+
+function persistLatency(stored: StoredLatency): string | null {
+  try {
+    localStorage.setItem(LATENCY_STORAGE_KEY, JSON.stringify(stored));
+    return null;
+  } catch (error) {
+    console.warn('[store] could not persist latency', error);
+    return `Calibration is active for this session but could not be saved: ${
+      error instanceof Error ? error.message : String(error)
+    }`;
   }
 }
 
@@ -69,7 +122,7 @@ export const useAppStore = create<AppState>((set) => ({
   setFramingPassed: (framingPassed) => set({ framingPassed }),
   setLatency: (result) => {
     if (!result) {
-      localStorage.removeItem(LATENCY_STORAGE_KEY);
+      forgetStoredLatency();
       set({ latency: null });
       return;
     }
@@ -78,8 +131,8 @@ export const useAppStore = create<AppState>((set) => ({
       stdDevMs: result.stdDevMs,
       reliable: result.reliable,
     };
-    localStorage.setItem(LATENCY_STORAGE_KEY, JSON.stringify(stored));
-    set({ latency: stored });
+    const failure = persistLatency(stored);
+    set(failure ? { latency: stored, error: failure } : { latency: stored });
   },
   selectLick: (selectedLickId) => set({ selectedLickId }),
   finishAttempt: (score, boxVerdict) => set({ score, boxVerdict, phase: 'results' }),

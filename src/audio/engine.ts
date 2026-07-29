@@ -30,6 +30,7 @@ export class LiveAnalyzer {
   private emitted: DetectedNote[] = [];
   private latestPitch: PitchFrame | null = null;
   private latestRms = 0;
+  private droppedSamples = 0;
 
   private readonly sampleRate: number;
 
@@ -45,15 +46,24 @@ export class LiveAnalyzer {
     this.emitted = [];
     this.latestPitch = null;
     this.latestRms = 0;
+    this.droppedSamples = 0;
   }
 
   /** Feeds one hop from the capture worklet. */
   push(samples: Float32Array, startTimeMs: number, rms: number): void {
     if (this.startTimeMs == null) this.startTimeMs = startTimeMs;
-    if (this.written + samples.length > this.buffer.length) return;
+    if (this.written + samples.length > this.buffer.length) {
+      this.droppedSamples += samples.length;
+      return;
+    }
     this.buffer.set(samples, this.written);
     this.written += samples.length;
     this.latestRms = rms;
+  }
+
+  /** True once the take outgrew the buffer and audio started being dropped. */
+  get overflowed(): boolean {
+    return this.droppedSamples > 0;
   }
 
   /** Milliseconds of audio captured so far. */
